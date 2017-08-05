@@ -5,6 +5,8 @@ from keras.layers import Dense, Dropout, Flatten, Activation, Conv2D, MaxPooling
 from com.kailin.api_file import api_file
 from com.kailin.api_image import api_image
 
+numpy.random.seed(10)
+
 dict = {0: 'airplane', 1: 'automobile', 2: 'bird', 3: 'cat', 4: 'deer', 5: 'dog', 6: 'frog', 7: 'horse', 8: 'ship',
         9: 'truck'}
 (train_image, train_label), (test_image, test_label) = cifar10.load_data()
@@ -35,6 +37,8 @@ model.add(Dropout(0.3))
 model.add(Dense(units=768, activation='relu'))
 model.add(Dropout(0.3))
 model.add(Dense(units=10, activation='softmax'))
+
+
 
 try:
     api_file.loadMode(model, 'E:\pythonwork\data\e09.h5')

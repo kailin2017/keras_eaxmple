@@ -1,9 +1,12 @@
+import numpy
 from keras.utils import np_utils
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from com.kailin.api_image import api_image
 from com.kailin.api_file import api_file
+
+numpy.random.seed(10)
 
 (train_image, train_label), (test_image, test_label) = mnist.load_data()
 

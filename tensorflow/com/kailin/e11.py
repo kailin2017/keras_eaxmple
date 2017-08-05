@@ -7,6 +7,7 @@ from keras.layers import Dense, Dropout
 from com.kailin.api_file import api_file
 from com.kailin.api_image import api_image
 
+numpy.random.seed(10)
 
 def PreprocessDada(df):
     df = df.drop(['name'], axis=1)
