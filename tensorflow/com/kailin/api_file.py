@@ -11,3 +11,6 @@ class api_file:
 
     def readExcel(path):
         return pandas.read_excel(path)
+
+    def readCsv(path):
+        return pandas.read_csv(path)
