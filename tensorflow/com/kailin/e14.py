@@ -26,11 +26,12 @@ test_data_f = linreg.predict(test_data)
 # 計算MES、RMSE
 print("train MSE:", metrics.mean_squared_error(test_label, test_data_f))
 print("train RMSE:", numpy.sqrt(metrics.mean_squared_error(test_label, test_data_f)))
+
 # 繪製曲線圖
-# pyplot.scatter(train_data_f, train_label)
-# pyplot.show()
-# pyplot.scatter(test_data_f, test_label)
-# pyplot.show()
+pyplot.scatter(train_data_f, train_label)
+pyplot.show()
+pyplot.scatter(test_data_f, test_label)
+pyplot.show()
 
 numpy.random.seed(10)
 
