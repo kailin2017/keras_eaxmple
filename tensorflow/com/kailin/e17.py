@@ -1,32 +1,56 @@
-from pandas import DataFrame, concat
-
-from com.kailin.api_image import api_image
-from com.kailin.api_file import api_file
+import numpy
 from matplotlib import pyplot
-from math import sqrt
-from sklearn.metrics import mean_squared_error
+from keras.models import Sequential
+from keras.layers import Dense
+
+from com.kailin.api_file import api_file
+from com.kailin.api_image import api_image
+
+numpy.random.seed(7)
 
 
-def timeseries_to_supervised(data, log=1):
-    df = DataFrame(data)
-    columns = [df.shift(i) for i in range(1, log + 1)]
-    columns.append(df)
-    return concat(columns, axis=1).fillna(0, inplace=True)
+def createDataset(dataset, look_back=1):
+    dataX = []
+    dataY = []
+    for i in range(len(dataset) - look_back - 1):
+        dataX.append(dataset[i:i + look_back, 1])
+        dataY.append(dataset[i + look_back, 1])
+    return numpy.array(dataX), numpy.array(dataY)
 
 
-dataSource = api_file.readExcel('E:/pythonwork/data/sales-of-shampoo-over-a-three-ye.xlsx')
+dataset = api_file.readExcel(api_file.dataPath + 'international-airline-passengers.xls').values
+datasetX = dataset[:, 0]
+datasetY = dataset[:, 1]
 
-trainX = dataSource[:24].values
-testX = dataSource[24:].values
+dataset32 = dataset
+train_size = int(len(dataset32) * 0.7)
+train, test = dataset32[:train_size], dataset32[train_size:]
 
-history = [x for x in trainX]
-predictions = list()
-for i in range(len(testX)):
-    predictions.append(history[-1])
-    history.append(testX[i])
+print(len(train), len(test))
+look_back = 1
+trainX, trainY = createDataset(train, look_back)
+testX, testY = createDataset(test, look_back)
 
-print('RMSE : ', sqrt(mean_squared_error(testX, predictions)))
+model = Sequential()
+model.add(Dense(units=8, input_dim=look_back, activation='relu'))
+model.add(Dense(units=1))
+model.compile(loss='mean_squared_error', optimizer='adam')
+model.fit(trainX, trainY, nb_epoch=200, batch_size=2, verbose=2)
 
-pyplot.plot(testX)
-pyplot.plot(predictions)
+trainScore = model.evaluate(trainX, trainY, verbose=0)
+print('Train Score ', trainScore)
+testScore = model.evaluate(testX, testY, verbose=0)
+print('Test Score ', testScore)
+
+trainPredict = model.predict(trainX)
+testPredict = model.predict(testX)
+
+pyplot.plot(datasetX, datasetY)
+pyplot.plot(datasetX[look_back:len(trainPredict) + look_back], trainPredict)
+pyplot.plot(datasetX[len(trainPredict) + look_back * 2 + 1:len(dataset) - 1], testPredict)
 pyplot.show()
+print('dataset X')
+print('train predict \n', trainPredict)
+print('test predict \n', testPredict)
+
+
