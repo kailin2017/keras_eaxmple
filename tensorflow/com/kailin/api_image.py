@@ -24,6 +24,21 @@ class api_image:
             idx += 1
         pyplot.show()
 
+    def showImageLabelPredictionHot(images, labels, predition, idx=0, num=25):
+        pyplot.gcf().set_size_inches(12, 14)
+        if num > 25: num = 25
+        for i in range(0, num):
+            ax = pyplot.subplot(5, 5, 1 + i)
+            ax.imshow(numpy.reshape(images[idx], (28, 28)), cmap='binary')
+            title = 'label=' + str(numpy.argmax(labels[idx]))
+            if len(predition) > 0:
+                title += ',predict=' + str(predition[idx])
+            ax.set_title(title, fontsize=10)
+            ax.set_xticks([])
+            ax.set_yticks([])
+            idx += 1
+        pyplot.show()
+
     def showImageLabelPredictionDict(images, labels, predition, dict, idx=0, num=10):
         pyplot.gcf().set_size_inches(12, 14)
         if num > 25: num = 25

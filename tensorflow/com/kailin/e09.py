@@ -4,6 +4,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Activation, Conv2D, MaxPooling2D, ZeroPadding2D
 from com.kailin.api_file import api_file
 from com.kailin.api_image import api_image
+import numpy
 
 numpy.random.seed(10)
 

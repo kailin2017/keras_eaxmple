@@ -9,8 +9,8 @@ import numpy
 
 numpy.random.seed(10)
 
-# clos = ['日期', '收盤', '開盤', '最高', '最低', '成交量', '成交金額']
-clos = ['日期', '收盤', '開盤']
+clos = ['日期', '收盤', '開盤', '最高', '最低', '成交量', '成交金額']
+# clos = ['日期', '收盤', '開盤']
 clos_count = len(clos) - 1
 
 
@@ -41,7 +41,7 @@ def futureDataset(data):
     return numpy.array(dataX)
 
 
-stockcode = '1301'
+stockcode = '2409'
 pathXlsx = api_file.dataPath + stockcode + '.xlsx'
 pathh5 = api_file.dataPath + stockcode + 'lstm.h5'
 

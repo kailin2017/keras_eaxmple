@@ -2,7 +2,7 @@ import pandas
 from keras.models import Sequential
 
 class api_file:
-    dataPath = "/Users/sinopac/Documents/GitHub/keras_eaxmple/data/"
+    dataPath = "C:/Users/Kailin/Documents/GitHub/keras_eaxmple/data/"
     def loadMode(model,path):
         model.load_weights(path)
 
